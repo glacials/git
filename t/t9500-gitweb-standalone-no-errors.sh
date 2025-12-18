@@ -506,8 +506,14 @@ test_expect_success \
 # feed generation
 
 test_expect_success \
-	'feeds: OPML' \
-	'gitweb_run "a=opml"'
+        'feeds: OPML' \
+        'gitweb_run "a=opml"'
+
+test_expect_success \
+        'feeds: OPML URLs are not duplicated' \
+        'gitweb_run "a=opml" &&
+         ! grep "xmlUrl=\\\"http[^\\\"]*http" gitweb.body &&
+         ! grep "htmlUrl=\\\"http[^\\\"]*http" gitweb.body'
 
 test_expect_success \
 	'feed: RSS' \
